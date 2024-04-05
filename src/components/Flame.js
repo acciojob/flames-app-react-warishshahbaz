@@ -4,10 +4,16 @@ const Flames = () => {
   const [name1, setName1] = useState("");
   const [name2, setName2] = useState("");
   const [relationship, setRelationship] = useState("");
+  const [error, setError] = useState("");
 
   const calculateRelationship = () => {
-    const name1Chars = name1.split("");
-    const name2Chars = name2.split("");
+    if (!name1 || !name2) {
+      setError("Please enter both names");
+      return;
+    }
+
+    const name1Chars = name1.toLowerCase().split("");
+    const name2Chars = name2.toLowerCase().split("");
 
     // Remove common letters from both names
     const filteredName1 = name1Chars.filter(
@@ -49,26 +55,31 @@ const Flames = () => {
     setName1("");
     setName2("");
     setRelationship("");
+    setError("");
   };
 
   return (
     <div>
+      <label htmlFor="name1">Name 1:</label>
       <input
         type="text"
+        id="name1"
         placeholder="Enter name 1"
-        name="name1"
         value={name1}
         onChange={(e) => setName1(e.target.value)}
         data-testid="input1"
       />
+      <br />
+      <label htmlFor="name2">Name 2:</label>
       <input
         type="text"
+        id="name2"
         placeholder="Enter name 2"
-        name="name2"
         value={name2}
         onChange={(e) => setName2(e.target.value)}
         data-testid="input2"
       />
+      <br />
       <button
         onClick={calculateRelationship}
         data-testid="calculate_relationship"
@@ -78,6 +89,7 @@ const Flames = () => {
       <button onClick={clearForm} data-testid="clear">
         Clear
       </button>
+      {error && <p style={{ color: "red" }}>{error}</p>}
       <h3 data-testid="answer">{relationship}</h3>
     </div>
   );

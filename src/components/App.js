@@ -59,6 +59,7 @@ function NameInput({ name, onChange, dataTestId }) {
   return (
     <input
       type="text"
+      name={name}
       value={name}
       onChange={onChange}
       data-testid={dataTestId}

@@ -56,6 +56,7 @@ const Flames = () => {
       <input
         type="text"
         placeholder="Enter name 1"
+        name="name1"
         value={name1}
         onChange={(e) => setName1(e.target.value)}
         data-testid="input1"
@@ -63,6 +64,7 @@ const Flames = () => {
       <input
         type="text"
         placeholder="Enter name 2"
+        name="name2"
         value={name2}
         onChange={(e) => setName2(e.target.value)}
         data-testid="input2"

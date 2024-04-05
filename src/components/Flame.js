@@ -9,13 +9,13 @@ const Flames = () => {
     const name1Chars = name1.split("");
     const name2Chars = name2.split("");
 
+    // Create frequency maps for both names
+    const frequencyMap1 = createFrequencyMap(name1Chars);
+    const frequencyMap2 = createFrequencyMap(name2Chars);
+
     // Remove common letters from both names
-    const filteredName1 = name1Chars.filter(
-      (char) => !name2Chars.includes(char)
-    );
-    const filteredName2 = name2Chars.filter(
-      (char) => !name1Chars.includes(char)
-    );
+    const filteredName1 = filterName(name1Chars, frequencyMap2);
+    const filteredName2 = filterName(name2Chars, frequencyMap1);
 
     const totalLength = filteredName1.length + filteredName2.length;
     const relationshipStatus = totalLength % 6;
@@ -43,6 +43,24 @@ const Flames = () => {
       default:
         setRelationship("Please enter valid input");
     }
+  };
+
+  const createFrequencyMap = (chars) => {
+    const map = {};
+    for (let char of chars) {
+      map[char] = map[char] ? map[char] + 1 : 1;
+    }
+    return map;
+  };
+
+  const filterName = (chars, frequencyMap) => {
+    return chars.filter((char) => {
+      if (frequencyMap[char] && frequencyMap[char] > 0) {
+        frequencyMap[char]--;
+        return false; // Remove the character
+      }
+      return true;
+    });
   };
 
   const clearForm = () => {
